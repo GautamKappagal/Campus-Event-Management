@@ -1,0 +1,101 @@
+{
+	"info": {
+		"name": "Campus Event Management API",
+		"description": "Backend API for managing campus clubs, events, and student registrations.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. Create a Club",
+			"request": {
+				"method": "POST",
+				"header": [
+					{ "key": "Content-Type", "value": "application/json" }
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Coding Club\",\n    \"description\": \"Where bugs become features\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/clubs",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["clubs"]
+				}
+			}
+		},
+		{
+			"name": "2. Create an Event",
+			"request": {
+				"method": "POST",
+				"header": [
+					{ "key": "Content-Type", "value": "application/json" }
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Spring Boot Workshop\",\n    \"description\": \"Learn to build REST APIs in a week\",\n    \"capacity\": 50,\n    \"club\": { \"id\": 1 }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/events",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["events"]
+				}
+			}
+		},
+		{
+			"name": "3. Get Pending Events (Admin)",
+			"request": {
+				"method": "GET",
+				"url": {
+					"raw": "http://localhost:8080/admin/pending-events",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["admin", "pending-events"]
+				}
+			}
+		},
+		{
+			"name": "4. Approve Event",
+			"request": {
+				"method": "POST",
+				"url": {
+					"raw": "http://localhost:8080/admin/approve/1",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["admin", "approve", "1"]
+				}
+			}
+		},
+		{
+			"name": "5. View Approved Events",
+			"request": {
+				"method": "GET",
+				"url": {
+					"raw": "http://localhost:8080/events",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["events"]
+				}
+			}
+		},
+		{
+			"name": "6. Register for Event",
+			"request": {
+				"method": "POST",
+				"url": {
+					"raw": "http://localhost:8080/events/1/register/1",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["events", "1", "register", "1"]
+				}
+			}
+		}
+	]
+}
