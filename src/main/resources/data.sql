@@ -3,9 +3,9 @@ INSERT INTO club (name, description) VALUES ('Tech Club', 'All about coding and 
 INSERT INTO club (name, description) VALUES ('Music Club', 'Jam sessions and music events');
 
 -- Insert sample Users
-INSERT INTO app_user (username, password, role) VALUES ('gautam', 'pass', 'STUDENT');
+INSERT INTO app_user (username, password, role) VALUES ('student', 'student', 'STUDENT');
 INSERT INTO app_user (username, password, role) VALUES ('admin', 'admin', 'ADMIN');
-INSERT INTO app_user (username, password, role) VALUES ('clubadmin', 'pass', 'CLUB_ADMIN');
+INSERT INTO app_user (username, password, role) VALUES ('clubadmin', 'clubadmin', 'CLUB_ADMIN');
 
 -- Insert sample Event (unapproved by default)
 INSERT INTO event (title, description, capacity, approved, club_id)
