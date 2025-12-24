@@ -1,10 +1,6 @@
 package com.gautam.campus_event_management.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,13 +10,23 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Registration {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    private User user;
+    private Event event;
 
     @ManyToOne
-    private Event event;
+    private AppUser user;
+
+    // Setters
+    public void setEvent(Event event) {
+        this.event = event;
+    }
+
+    public void setUser(AppUser user) {
+        this.user = user;
+    }
 }

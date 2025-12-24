@@ -1,7 +1,6 @@
 package com.gautam.campus_event_management.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,9 +15,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Event {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String title;
     private String description;
     private int capacity;
@@ -28,4 +29,25 @@ public class Event {
 
     @ManyToOne
     private Club club;
+
+    // Setters
+    public void setApproved(Boolean approved) {
+        this.approved = approved;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public void setClub(Club club) {
+        this.club = club;
+    }
 }

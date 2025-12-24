@@ -1,52 +1,53 @@
 package com.gautam.campus_event_management.controller;
 
-import java.util.List;
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import com.gautam.campus_event_management.dto.EventCreateDTO;
+import com.gautam.campus_event_management.entity.Club;
 import com.gautam.campus_event_management.entity.Event;
-import com.gautam.campus_event_management.entity.Registration;
-import com.gautam.campus_event_management.entity.User;
+import com.gautam.campus_event_management.repository.ClubRepository;
 import com.gautam.campus_event_management.repository.EventRepository;
-import com.gautam.campus_event_management.repository.RegistrationRepository;
-import com.gautam.campus_event_management.repository.UserRepository;
-
-import lombok.RequiredArgsConstructor;
+import com.gautam.campus_event_management.service.RegistrationService;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/events")
-@RequiredArgsConstructor
 public class EventController {
 
-    private final EventRepository eventRepo;
-    private final RegistrationRepository regRepo;
-    private final UserRepository userRepo;
+    private final EventRepository eventRepository;
+    private final ClubRepository clubRepository;
+    private final RegistrationService registrationService;
+
+    public EventController(
+            EventRepository eventRepository,
+            ClubRepository clubRepository,
+            RegistrationService registrationService) {
+        this.eventRepository = eventRepository;
+        this.clubRepository = clubRepository;
+        this.registrationService = registrationService;
+    }
 
     @PostMapping
-    public Event createEvent(@RequestBody Event event) {
-        return eventRepo.save(event);
+    public Event createEvent(@RequestBody EventCreateDTO dto) {
+        Club club = clubRepository.findById(dto.getClubId())
+                .orElseThrow(() -> new RuntimeException("Club not found"));
+
+        Event event = new Event();
+        event.setTitle(dto.getTitle());
+        event.setDescription(dto.getDescription());
+        event.setCapacity(dto.getCapacity());
+        event.setApproved(false);
+        event.setClub(club);
+
+        return eventRepository.save(event);
     }
 
     @GetMapping
-    public List<Event> getApprovedEvents() {
-        return eventRepo.findByApprovedTrue();
+    public Iterable<Event> getApprovedEvents() {
+        return eventRepository.findByApprovedTrue();
     }
 
     @PostMapping("/{eventId}/register/{userId}")
     public String register(@PathVariable Long eventId, @PathVariable Long userId) {
-        Event event = eventRepo.findById(eventId).orElseThrow();
-        User user = userRepo.findById(userId).orElseThrow();
-
-        if (regRepo.existsByUserAndEvent(user, event)) {
-            return "Already registered";
-        }
-
-        regRepo.save(new Registration(null, user, event));
-        return "Registered successfully";
+        registrationService.registerUser(eventId, userId);
+        return "User registered successfully!";
     }
 }
