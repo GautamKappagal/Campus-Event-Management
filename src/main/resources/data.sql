@@ -8,8 +8,6 @@ INSERT INTO app_user (username, password, role) VALUES ('admin', 'admin', 'ADMIN
 INSERT INTO app_user (username, password, role) VALUES ('clubadmin', 'clubadmin', 'CLUB_ADMIN');
 
 -- Insert sample Event (unapproved by default)
-INSERT INTO event (title, description, capacity, approved, club_id)
-VALUES ('Spring Boot Workshop', 'Learn to build APIs', 50, FALSE, 1);
+INSERT INTO event (title, description, capacity, approved, club_id) VALUES ('Spring Boot Workshop', 'Learn to build APIs', 50, FALSE, 1);
 
-INSERT INTO event (title, description, capacity, approved, club_id)
-VALUES ('Music Night', 'Live performance event', 100, FALSE, 2);
+INSERT INTO event (title, description, capacity, approved, club_id) VALUES ('Music Night', 'Live performance event', 100, FALSE, 2);
