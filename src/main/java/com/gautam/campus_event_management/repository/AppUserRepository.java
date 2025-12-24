@@ -7,4 +7,6 @@ import com.gautam.campus_event_management.entity.AppUser;
 
 @Repository
 public interface AppUserRepository extends JpaRepository<AppUser, Long> {
+
+    AppUser findByUsername(String username);
 }

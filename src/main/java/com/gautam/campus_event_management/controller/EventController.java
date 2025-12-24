@@ -6,6 +6,8 @@ import com.gautam.campus_event_management.entity.Event;
 import com.gautam.campus_event_management.repository.ClubRepository;
 import com.gautam.campus_event_management.repository.EventRepository;
 import com.gautam.campus_event_management.service.RegistrationService;
+
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -45,6 +47,7 @@ public class EventController {
         return eventRepository.findByApprovedTrue();
     }
 
+    @PreAuthorize("hasRole('STUDENT')")
     @PostMapping("/{eventId}/register/{userId}")
     public String register(@PathVariable Long eventId, @PathVariable Long userId) {
         registrationService.registerUser(eventId, userId);

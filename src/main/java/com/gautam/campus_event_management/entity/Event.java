@@ -30,6 +30,31 @@ public class Event {
     @ManyToOne
     private Club club;
 
+    // Getters
+    public Long getId() {
+        return id;
+    }
+
+    public Boolean getApproved() {
+        return approved;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public Club getClub() {
+        return club;
+    }
+
     // Setters
     public void setApproved(Boolean approved) {
         this.approved = approved;

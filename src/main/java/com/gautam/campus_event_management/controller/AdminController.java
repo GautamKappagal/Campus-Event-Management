@@ -3,6 +3,7 @@ package com.gautam.campus_event_management.controller;
 import com.gautam.campus_event_management.entity.Event;
 import com.gautam.campus_event_management.repository.EventRepository;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestController
 @RequestMapping("/admin")
@@ -14,11 +15,13 @@ public class AdminController {
         this.eventRepository = eventRepository;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/pending-events")
     public Iterable<Event> getPendingEvents() {
         return eventRepository.findByApprovedFalse();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/approve/{id}")
     public String approveEvent(@PathVariable Long id) {
         Event event = eventRepository.findById(id)
