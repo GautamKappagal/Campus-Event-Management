@@ -1,8 +1,10 @@
 package com.gautam.campus_event_management.config;
 
 import com.gautam.campus_event_management.security.JwtAuthenticationFilter;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -36,10 +38,23 @@ public class SecurityConfig {
                         "/h2-console/**"
                 ).permitAll()
 
+                // ADMIN access
                 .requestMatchers("/admin/**").hasRole("ADMIN")
+
+                // CLUB ADMIN → Create events
+                .requestMatchers(HttpMethod.POST, "/events").hasRole("CLUB_ADMIN")
+
+                // STUDENT → Register for events
+                .requestMatchers(HttpMethod.POST, "/events/*/register/*").hasRole("STUDENT")
+
+                // Everybody can view events
+                .requestMatchers(HttpMethod.GET, "/events/**").permitAll()
+
+                // Any other event request requires auth
                 .requestMatchers("/events/**").authenticated()
+
                 .anyRequest().permitAll()
-            )
+        )
 
             .sessionManagement(session -> session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))

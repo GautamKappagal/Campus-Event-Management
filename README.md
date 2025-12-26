@@ -13,7 +13,7 @@ This project simulates a real-world campus workflow where clubs propose events, 
 - Spring Data JPA
 - Spring Security + JWT
 - Swagger / OpenAPI
-- H2 In-Memory Database
+- MySQL Database
 - Maven
 
 ---
@@ -59,7 +59,7 @@ Tables generated automatically using JPA:
 - `app_user`
 - `registration`
 
-The database is in-memory (H2) and resets on every restart.
+The application uses a MySQL database for persistent storage.
 
 ---
 
@@ -68,8 +68,11 @@ The database is in-memory (H2) and resets on every restart.
 ### Prerequisites
 - Java 17+ (Java 22 recommended)
 - Maven installed
+- MySQL installed and running
 
 ### Run the Application
+
+Ensure MySQL is running and the database schema (campus_event_db) is created.
 
 ```bash
 mvn spring-boot:run
@@ -164,20 +167,6 @@ Example:
 
 ---
 
-## Default Seed Data (data.sql)
-
-Users preloaded at startup:
-
-| Username | Password | Role |
-|----------|----------|------|
-| admin | admin | ROLE_ADMIN |
-| clubadmin | clubadmin | ROLE_CLUB_ADMIN |
-| student | student | ROLE_STUDENT |
-
-Sample clubs and events are also inserted automatically.
-
----
-
 ## Postman Collection
 
 A full Postman API collection is included:
@@ -193,7 +182,7 @@ PostmanCollections/CampusEventManagement.postman_collection.json
 - Encrypt passwords with BCrypt
 - Add email notifications
 - Add event waitlists
-- Migrate to PostgreSQL
+- Add Docker support for MySQL and the backend
 - Add user profiles
 - Deploy on AWS / Render
 - Add CI/CD
